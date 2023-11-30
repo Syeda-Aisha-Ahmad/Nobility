@@ -1,0 +1,7 @@
+.loggout-style {
+    background: linear-gradient(rgba(0, 0, 0, 0.5),
+            rgba(0, 0, 0, 0.5)), url("https://assets.ey.com/content/dam/ey-sites/ey-com/en_us/topics/real-estate-hospitality-and-construction/ey-looking-upward-at-glass-buildings.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+
+}
