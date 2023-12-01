@@ -6,7 +6,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.2",
     "nodemon": "^3.0.1",
-    "react-icons": "^4.12.0"
+    "react-icons": "^4.12.0",
+    "redux-persist": "^6.0.0"
   },
   "name": "nobility",
   "version": "1.0.0",
