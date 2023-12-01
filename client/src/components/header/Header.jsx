@@ -41,8 +41,8 @@ export default function Header() {
                 </form>
                 <div className="dropdown">
                     <ul tabIndex={0} className="menu menu-compact right-0 top-10 dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
-                        <li className='hover:text-indigo-600'><a href='#about' className='hover:bg-base-100'>About</a></li>
-                        <li className='hover:text-indigo-600'><a href='#experience' className='hover:bg-base-100'>Home</a></li>
+                        <li className='hover:text-indigo-600'><Link to={"/about"} className='hover:bg-base-100'>About</Link></li>
+                        <li className='hover:text-indigo-600'><Link to={"/"} className='hover:bg-base-100'>Home</Link></li>
 
                         <Link to='/profile'>
                             {currentUser ? (
@@ -76,8 +76,8 @@ export default function Header() {
             {/* Large device */}
             <div className="navbar-end  w-3/12 hidden lg:flex ">
                 <ul className="menu menu-horizontal px-1 flex items-center gap-5">
-                    <li className='hover:text-indigo-600'><a href='#about' className='hover:bg-base-100 text-base'>About</a></li>
-                    <li className='hover:text-indigo-600'><a href='#experience' className='hover:bg-base-100 text-base'>Home</a></li>
+                    <li className='hover:text-indigo-600'><Link to={"/about"} className='hover:bg-base-100 text-base'>About</Link></li>
+                    <li className='hover:text-indigo-600'><Link to={"/"} className='hover:bg-base-100 text-base'>Home</Link></li>
                     <Link to='/profile'>
                         {currentUser ? (
                             <img
