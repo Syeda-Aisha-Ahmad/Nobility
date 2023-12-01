@@ -22,6 +22,7 @@ import {
 } from '../../redux/user/userSlice.js';
 
 import { useDispatch } from 'react-redux';
+import { Link } from "react-router-dom";
 
 export default function Profile() {
     const fileRef = useRef(null);
@@ -186,15 +187,17 @@ export default function Profile() {
 
                             </div>
 
-                            <div className='flex items-center gap-2'>
+                            <div className='grid grid-cols-2 items-center gap-2'>
                                 <div className="form-control mb-5 w-full">
                                     <button disabled={loading} className="btn bg-indigo-500 hover:bg-indigo-600 border-none text-white">
                                         {loading ? 'Loading...' : 'Update'}
                                     </button>
                                 </div>
-                                <div className="form-control mb-5 w-full">
-                                    <button className="btn bg-gray-600 hover:bg-gray-700 border-none text-white flex items-center gap-2">Create Listing</button>
-                                </div>
+                                <Link className="" to={"/create-listing"}>
+                                    <div className="form-control mb-5 w-full">
+                                        <button className="btn bg-gray-600 hover:bg-gray-700 border-none text-white flex items-center gap-2 cursor-pointer">Create Listing</button>
+                                    </div>
+                                </Link>
                             </div>
 
 
