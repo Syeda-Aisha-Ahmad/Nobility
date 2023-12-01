@@ -2,6 +2,7 @@ import { IoLogoGoogle } from "react-icons/io";
 import './SignUp.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from "react";
+import OAuth from "../../components/OAuth";
 
 
 export default function SignUp() {
@@ -88,7 +89,8 @@ export default function SignUp() {
                         </div>
                         <div className="divider text-indigo-200  after:bg-indigo-200 before:bg-indigo-200">OR</div>
                         <div className="form-control">
-                            <button className="btn bg-gray-600 hover:bg-gray-700 border-none text-white flex items-center gap-2"><IoLogoGoogle className='text-xl' /> Continue With Google</button>
+                            <OAuth />
+
                         </div>
                         <p className='text-white font-semibold'>Have an account?
 

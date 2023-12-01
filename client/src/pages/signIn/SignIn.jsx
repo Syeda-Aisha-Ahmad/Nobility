@@ -1,4 +1,4 @@
-import { IoLogoGoogle } from "react-icons/io";
+
 import './SignIn.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from "react";
@@ -8,6 +8,7 @@ import {
     signInSuccess,
     signInFailure,
 } from '../../redux/user/userSlice';
+import OAuth from "../../components/OAuth";
 
 export default function SignIn() {
     const [formData, setFormData] = useState({});
@@ -83,7 +84,8 @@ export default function SignIn() {
                         </div>
                         <div className="divider text-indigo-200  after:bg-indigo-200 before:bg-indigo-200">OR</div>
                         <div className="form-control">
-                            <button className="btn bg-gray-600 hover:bg-gray-700 border-none text-white flex items-center gap-2"><IoLogoGoogle className='text-xl' /> Continue With Google</button>
+                            <OAuth />
+                            {/* <button className="btn bg-gray-600 hover:bg-gray-700 border-none text-white flex items-center gap-2"><IoLogoGoogle className='text-xl' /> Continue With Google</button> */}
                         </div>
                         <p className='text-white font-semibold'>Dont have an account?
 
