@@ -14,7 +14,11 @@ import { app } from "../../firebase.js";
 import {
     updateUserStart,
     updateUserSuccess,
-    updateUserFailure
+    updateUserFailure,
+    deleteUserFailure,
+    deleteUserStart,
+    deleteUserSuccess,
+    signOutUserStart,
 } from '../../redux/user/userSlice.js';
 
 import { useDispatch } from 'react-redux';
@@ -91,9 +95,37 @@ export default function Profile() {
         }
     };
 
-    console.log(currentUser);
-    console.log(formData);
-    console.log(updateSuccess);
+    const handleDeleteUser = async () => {
+        try {
+            dispatch(deleteUserStart());
+            const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+                method: 'DELETE',
+            });
+            const data = await res.json();
+            if (data.success === false) {
+                dispatch(deleteUserFailure(data.message));
+                return;
+            }
+            dispatch(deleteUserSuccess(data));
+        } catch (error) {
+            dispatch(deleteUserFailure(error.message));
+        }
+    };
+
+    const handleSignOut = async () => {
+        try {
+            dispatch(signOutUserStart());
+            const res = await fetch('/api/auth/signout');
+            const data = await res.json();
+            if (data.success === false) {
+                dispatch(deleteUserFailure(data.message));
+                return;
+            }
+            dispatch(deleteUserSuccess(data));
+        } catch (error) {
+            dispatch(deleteUserFailure(data.message));
+        }
+    };
 
     return (
         <div className="max-w-[1400px] bg-indigo-50 mx-auto  h-screen pb-10 ">
@@ -165,14 +197,17 @@ export default function Profile() {
                                 </div>
                             </div>
 
-                            <div className='grid grid-cols-3 items-center gap-8 text-center text-sm md:text-base text-red-600 mt-5'>
-                                <span>Delete Account</span>
-                                <span className='font-semibold text-indigo-600'>Show listings</span>
-                                <span>Sign Out</span>
-                            </div>
+
                         </div>
 
                     </form>
+
+                    <div className='grid grid-cols-3 items-center gap-8 text-center text-sm md:text-base text-red-600 mt-5'>
+                        <span onClick={handleDeleteUser} className="cursor-pointer"
+                        >Delete Account</span>
+                        <span className='font-semibold text-indigo-600'>Show listings</span>
+                        <span onClick={handleSignOut} className="cursor-pointer">Sign Out</span>
+                    </div>
                 </div>
 
             </div>
