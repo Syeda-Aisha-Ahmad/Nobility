@@ -1,7 +1,52 @@
 import { useSelector } from "react-redux";
+import { useRef, useState, useEffect } from "react";
+import { app } from "../../firebase";
+
+import {
+    getDownloadURL,
+    getStorage,
+    ref,
+    uploadBytesResumable,
+} from 'firebase/storage';
 
 export default function Profile() {
-    const { currentUser } = useSelector((state) => state.user)
+    const fileRef = useRef(null);
+    const { currentUser } = useSelector((state) => state.user);
+    const [file, setFile] = useState(undefined);
+    const [filePerc, setFilePerc] = useState(0);
+    const [fileUploadError, setFileUploadError] = useState(false);
+    const [formData, setFormData] = useState({});
+
+
+    useEffect(() => {
+        if (file) {
+            handleFileUpload();
+        }
+    }, [file]);
+
+    const handleFileUpload = (file) => {
+        const storage = getStorage(app);
+        const fileName = new Date().getTime() + file.name;
+        const storageRef = ref(storage, fileName);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+        uploadTask.on(
+            'state_changed',
+            (snapshot) => {
+                const progress =
+                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                setFilePerc(Math.round(progress));
+            },
+            (error) => {
+                setFileUploadError(true);
+            },
+            () => {
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) =>
+                    setFormData({ ...formData, avatar: downloadURL })
+                );
+            }
+        );
+    };
+
     return (
         <div className="max-w-[1400px] bg-indigo-50 mx-auto  h-screen pb-10 ">
 
@@ -11,7 +56,29 @@ export default function Profile() {
             </div> */}
             <div className='bg-indigo-200 h-[150px] profile-styles'>
                 <div className=''>
-                    <img className="bg-white border border-gray-400 w-[150px] mx-auto relative top-16 h-[150px] rounded-full" src={currentUser.avatar} alt="" />
+                    <input onChange={(e) => setFile(e.target.files[0])}
+                        type="file"
+                        ref={fileRef}
+                        hidden
+                        accept="image/*" />
+                    <img onClick={() => fileRef.current.click()}
+                        className="bg-white border border-gray-400 w-[150px] mx-auto relative top-16 h-[150px] rounded-full"
+                        src={formData.avatar || currentUser.avatar}
+                        alt="profile" />
+
+                    <p className='text-sm self-center'>
+                        {fileUploadError ? (
+                            <span className='text-red-700'>
+                                Error Image upload (image must be less than 2 mb)
+                            </span>
+                        ) : filePerc > 0 && filePerc < 100 ? (
+                            <span className='text-slate-700'>{`Uploading ${filePerc}%`}</span>
+                        ) : filePerc === 100 ? (
+                            <span className='text-green-700'>Image successfully uploaded!</span>
+                        ) : (
+                            ''
+                        )}
+                    </p>
                 </div>
             </div>
             <div className="hero mt-20">
