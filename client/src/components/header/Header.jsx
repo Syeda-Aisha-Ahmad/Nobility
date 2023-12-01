@@ -1,7 +1,10 @@
 import { FiMenu } from 'react-icons/fi';
 import { IoSearchSharp } from "react-icons/io5";
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 export default function Header() {
+    const { currentUser } = useSelector(state => state.user);
     return (
         <div className=" navbar px-5 lg:px-16 py-2 text-lg text-gray-700 font-semibold lg:max-w-[1400px] mx-auto flex justify-between items-center bg-indigo-100">
             {/* Small and medium Device */}
@@ -15,7 +18,19 @@ export default function Header() {
                     <ul tabIndex={0} className="menu menu-compact right-0 top-10 dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
                         <li className='hover:text-indigo-600'><a href='#about' className='hover:bg-base-100'>About</a></li>
                         <li className='hover:text-indigo-600'><a href='#experience' className='hover:bg-base-100'>Home</a></li>
-                        <li className='hover:text-indigo-600'><a href='#skills' className='hover:bg-base-100'>Sign In</a></li>
+
+                        <Link to='/profile'>
+                            {currentUser ? (
+                                <img
+                                    className='rounded-full h-7 w-7 object-cover'
+                                    src={currentUser.avatar}
+                                    alt='profile'
+                                />
+                            ) : (
+                                <li className=' text-slate-700 hover:underline'> Sign in</li>
+                            )}
+                        </Link>
+
                     </ul>
                     <div className='mr-auto'>
                         <label tabIndex={0} className="btn btn-ghost text-2xl text-indigo-800 lg:hidden">
@@ -38,7 +53,17 @@ export default function Header() {
                 <ul className="menu menu-horizontal px-1 flex items-center gap-5">
                     <li className='hover:text-indigo-600'><a href='#about' className='hover:bg-base-100 text-base'>About</a></li>
                     <li className='hover:text-indigo-600'><a href='#experience' className='hover:bg-base-100 text-base'>Home</a></li>
-                    <li className='hover:text-indigo-600'><a href='#skills' className='hover:bg-base-100 text-base'>Sign In</a></li>
+                    <Link to='/profile'>
+                        {currentUser ? (
+                            <img
+                                className='rounded-full h-7 w-7 object-cover'
+                                src={currentUser.avatar}
+                                alt='profile'
+                            />
+                        ) : (
+                            <li className=' text-slate-700 hover:underline'> Sign in</li>
+                        )}
+                    </Link>
                 </ul>
             </div>
         </div>
